@@ -2,11 +2,13 @@ package org.yh.playvideotest;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -15,6 +17,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private VideoView videoView;
 
     @Override
@@ -76,7 +79,17 @@ public class MainActivity extends AppCompatActivity
     private void initVideoPath()
     {
         File file = new File(Environment.getExternalStorageDirectory(), "movie.mp4");
-        videoView.setVideoPath(file.getPath()); // 指定视频文件的路径
+        //videoView.setVideoPath(file.getPath()); // 指定视频文件的路径
+        //播放sd卡中的视频的代码
+        //file:///sdcard/video/test.3gp
+        //播放当前工程中的视频的代码
+        //android.resource://包名/"+R.raw.tianyi
+        Log.e(TAG, file.getPath());
+        Log.e(TAG, "file://" + Environment.getExternalStorageDirectory().getPath() + File
+                .separator + "movie.mp4");
+        videoView.setVideoURI(Uri.parse("file://" + Environment.getExternalStorageDirectory()
+                .getPath() + File
+                .separator + "movie.mp4"));
     }
 
     @Override
